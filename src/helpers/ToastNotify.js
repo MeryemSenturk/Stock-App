@@ -1,3 +1,6 @@
+
+// kullanıcı login ve logout olduğunda mesaj render eder
+
 import { toast } from "react-toastify";
 
 export const toastWarnNotify = (msg) => {

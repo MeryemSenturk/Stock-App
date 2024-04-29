@@ -94,6 +94,7 @@ const AuthProvider = ({ children }) => {
           "currentUser",
           JSON.stringify({ email, displayName, photoURL })
         );
+
       } else {
         // User is signed out
         setCurrentUser(false);
