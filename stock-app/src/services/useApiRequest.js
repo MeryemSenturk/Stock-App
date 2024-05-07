@@ -17,8 +17,8 @@ import useAxios from "./useAxios";
 const useApiRequest = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-const {token} = useSelector((state)=> state.token)
-  
+  const { axiosToken, axiosPublic } = useAxios();
+  // const { token } = useSelector((state) => state.auth)
   const login = async (userData) => {
     //   const BASE_URL = "https://10001.fullstack.clarusway.com"
 
@@ -54,16 +54,16 @@ const {token} = useSelector((state)=> state.token)
     }
   };
   const logout = async () => {
-     dispatch(fetchStart());
-     try {
-       await axios(`${process.env.REACT_APP_BASE_URL}/auth/logout`, {
-        header: {Authorization: `Token ${token}`},
-       })
-       dispatch(logoutSuccess());
-     
-     } catch (error) {
-       dispatch(fetchFail());
-     }
+    dispatch(fetchStart());
+    try {
+      // await axios(`${process.env.REACT_APP_BASE_URL}/auth/logout`, {
+      //   headers: { Authorization: `Token ${token}` },
+      // })
+      await axiosToken.get("/auth/logout");
+      dispatch(logoutSuccess());
+    } catch (error) {
+      dispatch(fetchFail());
+    }
   };
 
   return { login, register, logout };
