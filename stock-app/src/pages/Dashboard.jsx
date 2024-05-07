@@ -112,7 +112,7 @@ function Dashboard(props) {
               Logout
             </Button>
           )}{" "}
-           {/* parametre yoksa logout gibi doğrudan çağırılabilir. */}
+          {/* parametre yoksa logout gibi doğrudan çağırılabilir. */}
         </Toolbar>
       </AppBar>
       <Box
@@ -135,6 +135,8 @@ function Dashboard(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "secondary.main",
+             
             },
           }}
         >
@@ -147,6 +149,8 @@ function Dashboard(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: "secondary.main",
+          
             },
           }}
           open
@@ -163,7 +167,7 @@ function Dashboard(props) {
         }}
       >
         <Toolbar />
-<Outlet/>
+        <Outlet />
       </Box>
     </Box>
   );
