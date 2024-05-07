@@ -10,29 +10,28 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { Formik, Form } from "formik";
 import { object, string } from "yup";
-// import { login } from "../services/useApiRequest";
+// import { login } from "../services/useApiRequest"
 import useApiRequest from "../services/useApiRequest";
 
 const Login = () => {
+  const { login } = useApiRequest();
 
-  const {login} = useApiRequest()
-  
-   const loginSchema = object({
-     email: string()
-       .email("Geçerli bir email giriniz")
-       .required("Email zorunludur"),
-     password: string()
-       .required("Şifre zorunludur")
-       .min(8, "Şifre en az 8 karakter olmalıdır")
-       .max(16, "Şifre en fazla 16 karakter olmalıdır")
-       .matches(/\d+/, "Şifre en az bir rakam içermelidir.")
-       .matches(/[a-z]+/, "Şifre en az bir küçük harf içermelidir.")
-       .matches(/[A-Z]+/, "Şifre en az bir büyük harf içermelidir.")
-       .matches(
-         /[@$!%*?&]+/,
-         "Şifre en az bir özel karakter(@$!%*?&) içermelidir."
-       ),
-   });
+  const loginSchema = object({
+    email: string()
+      .email("Geçerli bir email giriniz")
+      .required("Email zorunludur"),
+    password: string()
+      .required("Şifre zorunludur")
+      .min(8, "Şifre en az 8 karakter olmalıdır")
+      .max(16, "Şifre en fazla 16 karakter olmalıdır")
+      .matches(/\d+/, "Şifre en az bir rakam içermelidir.")
+      .matches(/[a-z]+/, "Şifre en az bir küçük harf içermelidir.")
+      .matches(/[A-Z]+/, "Şifre en az bir büyük harf içermelidir.")
+      .matches(
+        /[@$!%*?&]+/,
+        "Şifre en az bir özel karakter(@$!%*?&) içermelidir."
+      ),
+  });
 
   return (
     <Container maxWidth="lg">
@@ -77,14 +76,13 @@ const Login = () => {
             onSubmit={(values, actions) => {
               //TODO
               //? POST (Login)
-
-              login(values)
               //? Toastify
               //? Global state güncellenmesi
               //? form resetleme
-              actions.resetForm();
-              actions.setSubmitting(false); //? isSubmitting true olur (formik yapıyor)
               //? navigate
+              login(values);
+              actions.resetForm();
+              actions.setSubmitting(false); //? isSubmitting
             }}
           >
             {({
@@ -132,6 +130,7 @@ const Login = () => {
               </Form>
             )}
           </Formik>
+
           <Box sx={{ textAlign: "center", mt: 2 }}>
             <Link to="/register">Do you have not an account?</Link>
           </Box>
@@ -148,8 +147,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
-   
