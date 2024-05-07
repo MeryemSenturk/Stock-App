@@ -19,7 +19,7 @@ const Register = () => {
   const {register} = useApiRequest();
 
   const registerSchema = object({
-    userName: string().required("Kullaıcı adı zorunludur"),
+    username: string().required("Kullaıcı adı zorunludur"),
     firstName: string().required("İsim zorunludur"),
     lastName: string().required("Soyisim zorunludur"),
     email: string().email().required("Geçerli bir email giriniz"),
@@ -76,7 +76,7 @@ const Register = () => {
 
           <Formik
             initialValues={{
-              userName: "",
+              username: "",
               firstName: "",
               lastName: "",
               email: "",
@@ -84,6 +84,7 @@ const Register = () => {
             }}
             validationSchema={registerSchema}
             onSubmit={(values, actions) => {
+              console.log(values);
               //TODO
               //? POST (Login)
               //? Toastify
@@ -104,21 +105,18 @@ const Register = () => {
               isSubmitting,
             }) => (
               <Form>
-                <Box
-                  component="form"
-                  sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-                >
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   <TextField
                     label="User Name"
-                    name="userName"
+                    name="username"
                     id="userName"
                     type="text"
                     variant="outlined"
-                    value={values.userName}
+                    value={values.username}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={touched.userName && Boolean(errors.userName)}
-                    helperText={touched.userName && errors.userName}
+                    error={touched.username && Boolean(errors.username)}
+                    helperText={touched.username && errors.username}
                   />
                   <TextField
                     label="First Name"
@@ -168,7 +166,12 @@ const Register = () => {
                     error={touched.password && Boolean(errors.password)}
                     helperText={touched.password && errors.password}
                   />
-                  <Button type="submit" variant="contained" size="large" disabled={isSubmitting}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    disabled={isSubmitting}
+                  >
                     Submit
                   </Button>
                 </Box>
