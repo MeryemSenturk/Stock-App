@@ -50,7 +50,7 @@ const MenuListComp = () => {
     <div>
       <List>
         {icons.map((item, index) => (
-          <ListItem key={item.title} disablePadding onClick={() => navigate(item.path)}>
+          <ListItem key={index} disablePadding onClick={() => navigate(item.path)}>
             <ListItemButton>
               <ListItemIcon>
                 {item.iconName}
