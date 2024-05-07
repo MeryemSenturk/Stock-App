@@ -13,17 +13,17 @@
 //   const {logout}= useApiRequest() //logout fonksiyonunu çıkardık.
 
 //   return (
-//     <Box sx={{ display: "flex" }}>
-//       <CssBaseline />
-//       <AppBar position="fixed">
-//         <Toolbar>
-//           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-//             STOCK APP
-//           </Typography>
-//           {user && <Button color="inherit" onClick={logout}>Logout</Button>} //? parametre yoksa logout gibi doğrudan çağırılabilir.
-//         </Toolbar>
-//       </AppBar>
-//     </Box>
+    // <Box sx={{ display: "flex" }}>
+    //   <CssBaseline />
+    //   <AppBar position="fixed">
+    //     <Toolbar>
+    //       <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+    //         STOCK APP
+    //       </Typography>
+          // {user && <Button color="inherit" onClick={logout}>Logout</Button>} //* parametre yoksa logout gibi doğrudan çağırılabilir.
+    //     </Toolbar>
+    //   </AppBar>
+    // </Box>
 //   );
 // }
 
@@ -142,7 +142,7 @@ function Dashboard(props) {
               Logout
             </Button>
           )}{" "}
-          //? parametre yoksa logout gibi doğrudan çağırılabilir.
+           {/* parametre yoksa logout gibi doğrudan çağırılabilir. */}
         </Toolbar>
       </AppBar>
       <Box
