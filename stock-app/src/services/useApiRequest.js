@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import useAxios from "./useAxios";
 import axios from "axios"
 
+
 //?Custom hook
 //? Eger uygulamanın her yerinde kullanmak için bazı fonksiyonlara ihtyaç varsa  ve bu fonksiyonlar içerisinde custom hook'ların ( useSelector, useDispatch,useNavigate etc.) kullanılması gerekiyorsa o Zaman çözüm Bu dosyayı custom hook'a çevirmektir.
 
@@ -76,7 +77,11 @@ toastSuccessNotify("Register işlemi başarılı");
     }
   };
 
-  return { login, register, logout };
+
+
+
+
+  return { login, register, logout, };
 };
 
 export default useApiRequest;
