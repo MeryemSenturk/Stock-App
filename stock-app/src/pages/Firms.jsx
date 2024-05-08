@@ -14,6 +14,7 @@ import { useSelector } from "react-redux"
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 
 
  const Firms = () => {
@@ -28,6 +29,14 @@ import Grid from "@mui/material/Grid";
 
   return (
     <>
+      <Typography variant="h3" color="text.secondary">
+       Firms
+      </Typography>
+
+      <Button variant="contained" disableElevation>
+        NEW FIRM
+      </Button>
+
       <Grid container spacing={2}>
         {firms?.map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.id}>
