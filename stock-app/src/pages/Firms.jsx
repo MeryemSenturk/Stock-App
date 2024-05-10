@@ -19,10 +19,12 @@ import Button from "@mui/material/Button";
 
  const Firms = () => {
     const stock = useSelector((state) => state.stock.firms);
-    const { getFirms } = useStockRequest();
-
+    // const { getFirms } = useStockRequest();
+const { getStock } = useStockRequest();
     useEffect(() => {
-      getFirms();
+      // getFirms();
+      getStock("firms");
+      getStock("sales");
     }, []);
 
     // console.log(firms);

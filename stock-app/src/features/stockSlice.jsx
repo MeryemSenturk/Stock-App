@@ -19,10 +19,16 @@ fetchStockStart: (state)=> {
 state.loading = true;
 },
 
-getFirmsSuccess: (state, {payload}) => {
-state.loading = false;
-state.firms=payload
+// getFirmsSuccess: (state, {payload}) => {
+// state.loading = false;
+// state.firms=payload
+// },
+
+getStockSuccess: (state, action) => {
+    state.loading = false;
+    state[action.payload.path]=action.payload.stockData
 },
+
 
 fetchStockFail: (state)=> {
 state.loading = false;
@@ -33,7 +39,8 @@ state.error = true;
     }
 });
 
-export const { fetchStockStart, getFirmsSuccess, fetchStockFail } = stockSlice.actions;
+// export const { fetchStockStart, getFirmsSuccess, fetchStockFail } = stockSlice.actions;
+export const { fetchStockStart, getStockSuccess, fetchStockFail } = stockSlice.actions;
 
 
 export default stockSlice.reducer;
