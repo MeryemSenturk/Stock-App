@@ -18,7 +18,7 @@ import Button from "@mui/material/Button";
 
 
  const Firms = () => {
-    const firms = useSelector((state) => state.firms.firms);
+    const stock = useSelector((state) => state.stock.firms);
     const { getFirms } = useStockRequest();
 
     useEffect(() => {
@@ -30,7 +30,7 @@ import Button from "@mui/material/Button";
   return (
     <>
       <Typography variant="h3" color="text.secondary">
-       Firms
+        Firms
       </Typography>
 
       <Button variant="contained" disableElevation>
@@ -38,7 +38,7 @@ import Button from "@mui/material/Button";
       </Button>
 
       <Grid container spacing={2}>
-        {firms?.map((item) => (
+        {stock?.map((item) => (
           <Grid item xs={12} sm={6} md={4} key={item.id}>
             <Card sx={{ maxWidth: 345 }}>
               <CardHeader title={item.name} sx={{ textAlign: "center" }} />

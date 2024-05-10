@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/authSlice";
-import firmsSlice from "../features/firmsSlice";
+import stockReducer from "../features/stockSlice";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    firms: firmsSlice,
+    stock: stockReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
 });
