@@ -15,9 +15,10 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import { btnStyle } from "../styles/globalStyles";
 
 
- const Firms = () => {
+ const Firms = ({firm}) => {
     const stock = useSelector((state) => state.stock.firms);
     // const { getFirms } = useStockRequest();
 const { getStock } = useStockRequest();
@@ -25,9 +26,8 @@ const { getStock } = useStockRequest();
       // getFirms();
         // getStock("sales");
       getStock("firms");
-    
     }, []);
-
+const { deleteStock } = useStockRequest();
     // console.log(firms);
 
   return (
@@ -43,7 +43,18 @@ const { getStock } = useStockRequest();
       <Grid container gap={2} mt={3} justifyContent={"center"}>
         {stock?.map((item) => (
           <Grid item key={item._id}>
-            <Card sx={{ maxWidth: 345, height:"400px", width:"300px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"space-between", p:2,}}>
+            <Card
+              sx={{
+                maxWidth: 345,
+                height: "400px",
+                width: "300px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-between",
+                p: 2,
+              }}
+            >
               <CardHeader title={item.name} sx={{ textAlign: "center" }} />
               <CardMedia
                 component="img"
@@ -59,7 +70,10 @@ const { getStock } = useStockRequest();
               </CardContent>
               <CardActions disableSpacing sx={{ justifyContent: "center" }}>
                 <IconButton aria-label="delete">
-                  <DeleteOutlineIcon />
+                  <DeleteOutlineIcon
+                    sx={btnStyle}
+                    onClick={() => deleteStock("firms", firm._id)}
+                  />
                 </IconButton>
                 <IconButton aria-label="edit">
                   <EditIcon />

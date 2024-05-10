@@ -39,8 +39,20 @@ const dispatch = useDispatch()
     };
 
 
+       const deleteStock = async (path="firms", id) => {
+         dispatch(fetchStockStart());
+         try {
+          await axiosToken.delete(`/${path}/${id}`);
+        getStock(path)
+           
+         } catch (error) {
+           dispatch(fetchStockFail());
+           console.log(error);
+         }
+       };
+
   // return { getFirms};
-  return { getStock };
+  return { getStock, deleteStock };
 }
 
 export default useStockRequest
