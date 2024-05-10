@@ -15,7 +15,7 @@ const dispatch = useDispatch()
     try {
       const {data} =await axiosToken("/firms")
       console.log(data);
-      dispatch(getFirmsSuccess(data));
+      dispatch(getFirmsSuccess(data.data));
     } catch (error) {
       dispatch(fetchStockFail());
       console.log(error);

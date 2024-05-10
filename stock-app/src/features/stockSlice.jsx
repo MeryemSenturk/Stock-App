@@ -21,7 +21,7 @@ state.loading = true;
 
 getFirmsSuccess: (state, {payload}) => {
 state.loading = false;
-state.firms=payload.data
+state.firms=payload
 },
 
 fetchStockFail: (state)=> {
