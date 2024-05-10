@@ -18,6 +18,19 @@ const style = {
   p: 4,
 };
 
+/**
+ * @description
+ * 
+ * @param {  } handleClose -
+ * 
+ * @param {  } open -
+ * 
+ * @param {  } info -
+ * 
+ * @param {  } setInfo -
+ * 
+ * @returns {  }
+ */
 export default function ProductModal({ handleClose, open, info, setInfo }) {
 
 
@@ -26,10 +39,20 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
 
   
 
+  /**
+   * @description
+   * 
+   * @param {  } e -
+   */
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
+  /**
+   * @description
+   * 
+   * @param {  } e -
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     if (info._id) {

@@ -45,6 +45,11 @@ const rows = [
   { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
 ];
 
+/**
+ * @description
+ * 
+ * @returns {  }
+ */
 export default function DataGridDemo() {
   return (
     <Box sx={{ height: 400, width: "100%" }}>
