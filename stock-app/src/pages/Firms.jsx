@@ -23,15 +23,16 @@ import Button from "@mui/material/Button";
 const { getStock } = useStockRequest();
     useEffect(() => {
       // getFirms();
+        // getStock("sales");
       getStock("firms");
-      getStock("sales");
+    
     }, []);
 
     // console.log(firms);
 
   return (
     <>
-      <Typography variant="h3" color="text.secondary">
+      <Typography variant="h3" color={"error"} mb={2}>
         Firms
       </Typography>
 
