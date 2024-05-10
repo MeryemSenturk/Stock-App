@@ -1,8 +1,10 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
+import useStockRequest from "../services/useStockRequest";
 
 const style = {
   position: "absolute",
@@ -16,7 +18,38 @@ const style = {
   p: 4,
 };
 
-export default function FirmModal({ handleClose, open }) {
+export default function FirmModal({ handleClose, open, info, setInfo }) {
+  //   const [info, setInfo] = useState({
+  //     name: "",
+  //     phone: "",
+  //     image: "",
+  //     address: "",
+  //   })
+
+  const { postStock, putStock } = useStockRequest();
+
+
+  
+
+  const handleChange = (e) => {
+    setInfo({ ...info, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (info._id) {
+      //? put isteginin
+      putStock("firms", info);
+    } else{
+      //? post firma işlemi
+      postStock("firms", info);
+    }
+
+    //? modal ı kapıtıyoruz
+    handleClose();
+  };
+
+  console.log(info);
   return (
     <div>
       <Modal
@@ -26,12 +59,58 @@ export default function FirmModal({ handleClose, open }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+            component={"form"}
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              label="Firm Name"
+              name="name"
+              id="name"
+              type="text"
+              variant="outlined"
+              value={info.name}
+              onChange={handleChange}
+              required
+            />
+
+            <TextField
+              label="Phone"
+              name="phone"
+              id="phone"
+              type="tel"
+              variant="outlined"
+              value={info.phone}
+              onChange={handleChange}
+              required
+            />
+
+            <TextField
+              label="address"
+              name="address"
+              id="address"
+              type="text"
+              variant="outlined"
+              value={info.address}
+              onChange={handleChange}
+              required
+            />
+
+            <TextField
+              label="Image"
+              name="image"
+              id="image"
+              type="url"
+              variant="outlined"
+              value={info.image}
+              onChange={handleChange}
+              required
+            />
+            <Button variant="contained" type="submit">
+              {info._id ? "UPDATE FIRM" : "ADD FIRM"}
+            </Button>
+          </Box>
         </Box>
       </Modal>
     </div>

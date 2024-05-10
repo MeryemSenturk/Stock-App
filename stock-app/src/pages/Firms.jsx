@@ -1,53 +1,80 @@
-
-import * as React from "react";
+import { useEffect, useState } from "react";
+// import useAxios from "../services/useAxios"
+import useStockRequest from "../services/useStockRequest";
+import { useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react"
-import useStockRequest from "../services/useStockRequest"
-import { useSelector } from "react-redux"
-
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-
+import Grid from "@mui/material/Grid";
 import FirmCard from "../components/FirmCard";
 import FirmModal from "../components/FirmModal";
 
+// export const getFirms = async () => {
+//   try {
+//     const { data } = axiosToken("/firms")
+//     console.log(data)
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
- const Firms = () => {
-   const { firms } = useSelector((state) => state.stock);
-   // const { getFirms } = useStockRequest();
-   const { getStock } = useStockRequest();
+const Firms = () => {
+  // const { axiosToken } = useAxios()
+  // const { getFirms, getSales } = useStockRequest()
+  const { getStock } = useStockRequest();
+  const { firms } = useSelector((state) => state.stock);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+  const [info, setInfo] = useState({
+    name: "",
+    phone: "",
+    image: "",
+    address: "",
+  });
 
-   useEffect(() => {
-     // getFirms();
-     // getStock("sales");
-     getStock("firms");
-   }, []);
+  const handleClose = () => {
+    setOpen(false);
+    setInfo({
+      name: "",
+      phone: "",
+      image: "",
+      address: "",
+    });
+  };
 
-   // console.log(firms);
+  useEffect(() => {
+    // getFirms()
+    // getSales()
+    // getStock("sales")
+    getStock("firms");
+  }, []);
 
-   return (
-     <>
-       <Typography variant="h3" color={"error"} mb={2}>
-         Firms
-       </Typography>
+  return (
+    <div>
+      <Typography variant="h4" color={"error"} mb={2}>
+        Firms
+      </Typography>
 
-       <Button variant="contained" onClick={handleOpen}>
-         NEW FIRM
-       </Button>
-       <FirmModal handleClose={handleClose} open={open} />
+      <Button variant="contained" onClick={handleOpen}>
+        New Firm
+      </Button>
 
-       <Grid container gap={2} mt={3} justifyContent={"center"}>
-         {firms?.map((firm) => (
-           <Grid item key={firm._id}>
-             <FirmCard firm={firm} />
-           </Grid>
-         ))}
-       </Grid>
-     </>
-   );
- };
+      <FirmModal
+        handleClose={handleClose}
+        open={open}
+        info={info}
+        setInfo={setInfo}
+      />
+
+      <Grid container gap={2} mt={3} justifyContent={"center"}>
+        {firms.map((firm) => (
+          <Grid item key={firm._id}>
+            <FirmCard firm={firm} handleOpen={handleOpen} setInfo={setInfo} />
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
+};
+
 export default Firms;
