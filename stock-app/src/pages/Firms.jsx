@@ -40,17 +40,17 @@ const { getStock } = useStockRequest();
         NEW FIRM
       </Button>
 
-      <Grid container spacing={2}>
+      <Grid container gap={2} mt={3} justifyContent={"center"}>
         {stock?.map((item) => (
-          <Grid item xs={12} sm={6} md={4} key={item.id}>
-            <Card sx={{ maxWidth: 345 }}>
+          <Grid item key={item._id}>
+            <Card sx={{ maxWidth: 345, height:"400px", width:"300px", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"space-between", p:2,}}>
               <CardHeader title={item.name} sx={{ textAlign: "center" }} />
               <CardMedia
                 component="img"
                 height="150"
                 image={item.image}
                 alt="firms"
-                sx={{ objectFit: "cover" }}
+                sx={{ objectFit: "contain" }}
               />
               <CardContent sx={{ textAlign: "center" }}>
                 <Typography variant="body2" color="text.secondary">
