@@ -25,13 +25,13 @@ const dispatch = useDispatch()
 
 
   //? 7 tane fonksiyon yazmak yerine parametrik hale getirdik
-    const getStock = async (path) => {
+    const getStock = async (path = "firms") => {
       dispatch(fetchStockStart());
       try {
         const { data } = await axiosToken(`/${path}`);
         console.log(data);
-        const stockData = data.data
-        dispatch(getStockSuccess({stockData, path}));
+        const stockData = data.data;
+        dispatch(getStockSuccess({ stockData, path }));
       } catch (error) {
         dispatch(fetchStockFail());
         console.log(error);
