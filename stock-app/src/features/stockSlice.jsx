@@ -24,9 +24,14 @@ state.loading = true;
 // state.firms=payload
 // },
 
-getStockSuccess: (state, action) => {
+// getStockSuccess: (state, action) => {
+//     state.loading = false;
+//     state[action.payload.path]=action.payload.stockData
+// },
+
+getStockSuccess: (state, {payload: {path, stockData}}) => {
     state.loading = false;
-    state[action.payload.path]=action.payload.stockData
+    state[path]=stockData
 },
 
 
