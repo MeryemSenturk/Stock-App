@@ -28,8 +28,6 @@ export default function FirmModal({ handleClose, open, info, setInfo }) {
 
   const { postStock, putStock } = useStockRequest();
 
-
-  
 //? Hangi inputtan bilgi geldiyse o inputun değerini değiştiren fonksiyon. (target.name veya target.id olabilir)
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
