@@ -8,6 +8,11 @@ import FirmModal from "../components/FirmModal";
 import ProductTable from "../components/ProductTable";
 import ProductModal from "../components/ProductModal.jsx";
 
+/**
+ * @description
+ * 
+ * @returns {  }
+ */
 const Firms = () => {
   const { getStock } = useStockRequest();
   const { firms } = useSelector((state) => state.stock);
@@ -21,6 +26,9 @@ const Firms = () => {
     address: "",
   });
 
+  /**
+   * @description
+   */
   const handleClose = () => {
     setOpen(false);
     setInfo({
