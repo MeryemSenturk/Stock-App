@@ -30,7 +30,7 @@ export default function FirmModal({ handleClose, open, info, setInfo }) {
 
 
   
-
+//? Hangi inputtan bilgi geldiyse o inputun değerini değiştiren fonksiyon. (target.name veya target.id olabilir)
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
@@ -44,7 +44,6 @@ export default function FirmModal({ handleClose, open, info, setInfo }) {
       //? post firma işlemi
       postStock("firms", info);
     }
-
     //? modal ı kapıtıyoruz
     handleClose();
   };
@@ -71,7 +70,7 @@ export default function FirmModal({ handleClose, open, info, setInfo }) {
               type="text"
               variant="outlined"
               value={info.name}
-              onChange={handleChange}
+              onChange={handleChange}  
               required
             />
 
