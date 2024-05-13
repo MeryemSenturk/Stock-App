@@ -19,36 +19,39 @@ const style = {
 };
 
 /**
- * @description Creates a modal box with a form to input firm information. It handles
- * form submission and updates or adds firm data to the firms collection.
+ * @description Generates high-quality documentation for code given to it, providing
+ * a modal form to input firm information and update or add it to the database upon
+ * submission.
  * 
- * @param { JavaScript `function`. } handleClose - ıntérface method that will be
- * called when the modal is closed, and it is used to trigger the appropriate action,
- * such as removing the firm from the stock or adding it to the stock.
+ * @param { 🔴 (button or link to close the modal). } handleClose - ınt erasers in
+ * the Modal component, allowing you to call the Modal's `onClose` event handler when
+ * the Modal is closed.
  * 
- * 	1/ open: It is an object property that represents whether the modal is currently
- * open or not. It is set to `true` when the modal is opened and `false` when it is
- * closed.
- * 	2/ onClose: It is an event handler function that is triggered when the user closes
- * the modal. It takes no arguments.
- * 	3/ aria-labelledby: It is a string property that provides a human-readable label
- * for the modal's aria-activedescendant attribute.
- * 	4/ aria-describedby: It is a string property that provides a human-readable
- * description for the modal's aria-activedescendant attribute.
- * 	5/ postStock and putStock: These are functions that are used to send data to the
- * server for updating or inserting a firm into the Firms collection. They take no arguments.
+ * 		- `open`: A boolean value indicating whether the modal is currently open or not.
+ * 		- `info`: An object containing the form data, with fields such as `name`, `phone`,
+ * `address`, and `image`.
  * 
- * @param { boolean } open - status of the modal, determining whether it should be
- * displayed open or closed.
+ * 	The `handleChange` function takes an event object `e` as input and updates the
+ * `info` object by assigning the values of the target element(s) to the corresponding
+ * fields in the `info` object.
  * 
- * @param { object } info - firm data to be updated or created, which is used to set
- * the values of the form fields and passed as props to the Modal component.
+ * 	The `handleSubmit` function takes no input parameter and is responsible for
+ * handling the form submission. It prevents the default form submission behavior,
+ * and depending on whether the `info._id` property exists, it calls either the
+ * `putStock()` or `postStock()` function to update the firm in the database. Finally,
+ * it closes the modal by calling the `handleClose()` function.
  * 
- * @param { object } setInfo - state of firm data, updating it with the values from
- * the form inputs and storing them under the `_id` property if they exist.
+ * @param { boolean } open - open status of the modal, indicating whether the modal
+ * should be displayed or not.
  * 
- * @returns { object } a form for adding or updating firm information, with input
- * fields and a submit button.
+ * @param { object } info - firm details to be updated or added, which is used to
+ * update or add the firm record in the firms collection of the MongoDB database based
+ * on the input received from the form fields.
+ * 
+ * @param { object } setInfo - state of firm information and updates it by merging
+ * the form inputs with the current state of the firm information when the form is submitted.
+ * 
+ * @returns { any } a form for adding or updating firm information.
  */
 export default function FirmModal({ handleClose, open, info, setInfo }) {
   //   const [info, setInfo] = useState({
@@ -60,39 +63,33 @@ export default function FirmModal({ handleClose, open, info, setInfo }) {
 
   const { postStock, putStock } = useStockRequest();
 
-
-  
 //? Hangi inputtan bilgi geldiyse o inputun değerini değiştiren fonksiyon. (target.name veya target.id olabilir)
   /**
-   * @description Updates the `info` object by assigning the value of the target element
-   * to its corresponding key in the object.
+   * @description Updates `info` by setting a new value for a specific key based on the
+   * name and current value of the form input that triggered the event.
    * 
-   * @param { `HTMLInputElement`. } e - Event Object that is passed to the function,
-   * which contains information about the form field that the user has selected or
-   * entered value for.
-   * 
-   * 		- `target`: The component instance that triggered the change event.
-   * 		- `name`: The name of the input field whose value is being changed.
+   * @param { object } e - target object and provides its name and value to the `setInfo()`
+   * function.
    */
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
   /**
-   * @description Prevents the form submission by default, and then performs actions
-   * based on whether or not the `_id` property is present in the `info` object: posting
-   * or putting stock depending on its presence.
+   * @description Prevents the form's default submission behavior, checks if the `_id`
+   * property is present in the form data, and submits the data to the `firms` or `stock`
+   * endpoint depending on the presence of the `_id` property. It also hides the modal.
    * 
-   * @param { event. } e - Event object that triggered the function and prevents the
-   * default event handling behavior from occurring.
+   * @param { event. } e - ‟Event“ object passed from the listener, which contains
+   * information about the event that triggered the function.
    * 
-   * 		- `preventDefault()`: Prevents the default form submission behavior.
-   * 		- `_id`: The unique identifier for the firm, which is mandatory to pass.
-   * 		- `putStock`: An asynchronous function that updates the stock data for a given
-   * firm.
-   * 		- `postStock`: An asynchronous function that creates a new stock record for a
-   * given firm.
-   * 		- `handleClose`: A function to close the modal window when submission is complete.
+   * 		- `preventDefault()`: prevents the default form submission behavior to occur.
+   * 		- `_id`: the unique identifier for the firm being added or updated. If present,
+   * it indicates that the input is a patch request.
+   * 		- `putStock()`: the method to be called to update the stock of the firm in the
+   * firms collection.
+   * 		- `postStock()`: the method to be called to create a new record in the firms collection.
+   * 		- `handleClose()`: the method to be called when the form is closed.
    */
   const handleSubmit = (e) => {
     e.preventDefault();
