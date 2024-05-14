@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 90 },
+  { field: "_id", headerName: "#", width: 90 },
   {
     field: "firstName",
     headerName: "First name",
@@ -46,9 +46,23 @@ const rows = [
 ];
 
 /**
- * @description
+ * @description Generates a data grid with specified rows and columns, along with
+ * pagination options and checkbox selection enabled.
  * 
- * @returns {  }
+ * @returns { HTMLDivElement } a React component that renders a data grid with specified
+ * rows and columns, along with pagination and checkbox selection capabilities.
+ * 
+ * 		- `Box`: A React component that wraps around the `DataGrid` component, with a
+ * height of 400 pixels and width equal to the full container width.
+ * 		- `<DataGrid>`: The `DataGrid` component itself, which displays the grid of data.
+ * 		- `rows`: An array of objects containing the data to be displayed in the grid.
+ * 		- `columns`: An array of integers representing the number of columns in the grid.
+ * 		- `initialState`: An object containing the initial state of the `DataGrid`,
+ * including the `paginationModel` property with a page size of 5 and the `pageSizeOptions`
+ * property with a list of available page sizes.
+ * 		- `discoverRowSelectionOnClick`: A boolean value indicating whether row selection
+ * should be disabled when clicking on a cell.
+ * 		- `<Box>`: Another React component that provides a container for the `DataGrid`.
  */
 export default function DataGridDemo() {
   return (
