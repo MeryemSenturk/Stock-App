@@ -22,6 +22,7 @@ export default function ProductTable() {
       //   console.log("ROW:", row, "VALUE:", value)
       //   return value?.name
       // },
+      // value propu fielda verileni getirir. 
       valueGetter: (value) => value?.name,
     },
     {

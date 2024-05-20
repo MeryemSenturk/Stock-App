@@ -44,10 +44,12 @@ const dispatch = useDispatch()
          dispatch(fetchStockStart());
          try {
           await axiosToken.delete(`/${path}/${id}`);
+          toastSuccessNotify(`${path} basariliyla silinmiştir.`);
         getStock(path)
            
          } catch (error) {
            dispatch(fetchStockFail());
+           toastErrorNotify(`${path} silinememiştir.`);
            console.log(error);
          }
        };
