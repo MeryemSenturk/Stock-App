@@ -9,26 +9,30 @@ import ProductTable from "../components/ProductTable";
 import ProductModal from "../components/ProductModal.jsx";
 
 /**
- * @description Creates a form to input product details and displays them using
- * `ProductModal`. It gets stock information via `useStockRequest`.
+ * @description Displays a list of products and provides an "New Product" button to
+ * create a new product. It also renders a modal for adding or editing products, which
+ * fetches stock data from APIs on button click.
  * 
- * @returns { JSX element } a React component that displays a list of products and
- * allows for creating new products.
+ * @returns { jsx.element } a React component that displays a list of products and
+ * allows users to create new ones.
  * 
- * 		- `getStock`: This is a function that retrieves stock information from an API
- * endpoint. It takes no arguments.
- * 		- `firms`: This is an array of firm objects that contain information about each
- * firm. Each object in the array has the following properties: `id`, `name`, and `logo`.
- * 		- `open`: This is a boolean variable that indicates whether the product modal
- * is open or not. It is initialized to `false` by default.
- * 		- `setOpen`: This is a function that sets the value of `open` to either `true`
- * or `false`.
- * 		- `info`: This is an object that contains initial state for the product form.
- * It has three properties: `categoryId`, `brandId`, and `name`.
- * 		- `handleClose`: This is a function that sets the value of `open` to `false` and
- * resets the `info` object to its initial state.
- * 		- `useEffect`: This is a hook that causes the `getStock` function to be executed
- * when the component mounts. It takes no arguments.
+ * 		- `getStock`: The `getStock` function is a hook that retrieves stock information
+ * from an API. It takes no arguments and returns a promise of an object containing
+ * the stock data.
+ * 		- `firms`: The `firms` property is an array of firms, which is retrieved from
+ * the state of the application using the `useSelector` hook.
+ * 		- `open`: The `open` property is a boolean value that indicates whether the modal
+ * is currently open or closed. It is initialized to false and updated using the
+ * `handleOpen` function.
+ * 		- `setOpen`: The `setOpen` function is used to update the value of the `open` property.
+ * 		- `info`: The `info` property is an object that contains the initial state of
+ * the product form. It has three properties: `categoryId`, `brandId`, and `name`.
+ * These properties are initialized to empty strings and updated using the `handleClose`
+ * function.
+ * 		- `ProductModal`: The `ProductModal` component is a custom React component that
+ * renders the product creation form when the modal is open. It takes several props,
+ * including `handleClose`, `open`, and `info`, which are used to update the state
+ * of the form.
  */
 const Products = () => {
   const { getStock } = useStockRequest();
@@ -44,7 +48,8 @@ const Products = () => {
   const [info, setInfo] = useState(initialState);
 
   /**
-   * @description Sets `open` to `false` and `info` to its initial state.
+   * @description Sets `open` to `false` and initializes `info` to its default state,
+   * preparing the component for an unexpected termination.
    */
   const handleClose = () => {
     setOpen(false);
@@ -53,6 +58,8 @@ const Products = () => {
 
   useEffect(() => {
     getStock("products");
+    getStock("categories");
+    getStock("brands");
   }, []);
 
   return (
