@@ -11,6 +11,10 @@ export const NoDataMessage = () => {
   );
 };
 
+export const cardSkeleton = () => {
+    
+}
+
 const TableSkeleton = () => {
   return (
     <Stack spacing={1} sx={{ mt: 3 }}>

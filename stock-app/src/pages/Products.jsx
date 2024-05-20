@@ -7,11 +7,12 @@ import Grid from "@mui/material/Grid";
 import FirmModal from "../components/FirmModal";
 import ProductTable from "../components/ProductTable";
 import ProductModal from "../components/ProductModal.jsx";
-import TableSkeleton from "../components/DataFetchMessages.jsx";
+import TableSkeleton, { NoDataMessage } from "../components/DataFetchMessages.jsx";
 
 const Products = () => {
   const { getStock } = useStockRequest();
 const {loading} = useSelector((state) => state.stock)
+const {products} = useSelector((state) => state.stock)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
 
@@ -44,6 +45,7 @@ const {loading} = useSelector((state) => state.stock)
       </Button>
 
 {loading && <TableSkeleton/>}
+{!products.length && <NoDataMessage/> }
 
       <ProductModal
         handleClose={handleClose}
