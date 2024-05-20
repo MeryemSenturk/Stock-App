@@ -11,9 +11,6 @@ export const NoDataMessage = () => {
   );
 };
 
-export const cardSkeleton = () => {
-    
-}
 
 const TableSkeleton = () => {
   return (
