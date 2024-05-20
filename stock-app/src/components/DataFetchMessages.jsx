@@ -4,10 +4,9 @@ import Stack from '@mui/material/Stack';
 import Alert from "@mui/material/Alert";
 
 /**
- * @description Will render an Alert component with a severity level set to "warning"
- * and an message string of " Gösterilecek veri bulunamadı".
+ * @description Returns an alert with a warning message indicating that no data is available.
  * 
- * @returns { Component } an alert with a severity of "warning" and the message
+ * @returns { Component } an alert with a severity of warning and the message
  * "Gösterilecek veri bulunamadı".
  */
 export const NoDataMessage = () => {
@@ -19,11 +18,19 @@ export const NoDataMessage = () => {
 };
 
 /**
- * @description Generates five `<Skeleton>` components for a table with varying sizes
- * and spacings, each occupying a separate row in the return value of the function.
+ * @description Generates high-quality documentation for code given to it.
+ */
+export const cardSkeleton = () => {
+    
+}
+
+/**
+ * @description Generates a table with five rectangular skeletons, each with a different
+ * height and width ratio. The skeletons are stacked horizontally, with each one
+ * occupying half the width of the container.
  * 
- * @returns { array } a stack of five skeletons of different shapes and sizes, each
- * occupying the entire width of the parent element.
+ * @returns { array } a stack of six skeleton tables, each with a rectangular shape
+ * and varying heights.
  */
 const TableSkeleton = () => {
   return (

@@ -7,32 +7,33 @@ import Grid from "@mui/material/Grid";
 import FirmModal from "../components/FirmModal";
 import ProductTable from "../components/ProductTable";
 import ProductModal from "../components/ProductModal.jsx";
-import TableSkeleton from "../components/DataFetchMessages.jsx";
+import TableSkeleton, { NoDataMessage } from "../components/DataFetchMessages.jsx";
 
 /**
- * @description Manages the display of products, including handling modal opens and
- * closes, loading states, and product information. It retrieves stock data from API
- * endpoints and renders a table or skeleton when data is loading.
+ * @description Fetches stock data from API, creates a table with products, and
+ * displays it to the user. It also includes a modal for creating new products and
+ * setting initial product state.
  * 
- * @returns { JSXElement } a React component that displays a table of products when
- * open and a form to add new products when closed.
+ * @returns { JSX element } a web page displaying a table of products, a "New Product"
+ * button, and a modal window for creating new products.
  * 
- * 		- `loading`: This is an boolean property that indicates whether the data is
- * loading or not. It is initialized to `true` when the component mounts and is set
- * to `false` once the data has been loaded.
- * 		- `info`: This is an object property that contains the initial state of the
- * product catalog. It has three properties: `categoryId`, `brandId`, and `name`.
- * 		- `ProductModal`: This is a functional component that is rendered when the user
- * clicks on the "New Product" button. It takes in several props, including `handleClose`
- * (a function to close the modal), `open` (a boolean indicating whether the modal
- * is open or not), and `info` (an object containing the initial state of the product
- * catalog).
- * 		- `ProductTable`: This is a React table component that displays the list of
- * products. It is rendered conditionally based on whether the data is loading or not.
+ * 		- `Products`: This is an array of objects representing the products available
+ * in the catalog. Each object contains the following properties:
+ * 		+ `id`: A unique identifier for each product.
+ * 		+ `name`: The name of the product.
+ * 		+ `price`: The price of the product.
+ * 		+ `categoryId`: The ID of the category to which the product belongs.
+ * 		+ `brandId`: The ID of the brand that produces the product.
+ * 		+ `image`: An image of the product.
+ * 		- `loading`: A boolean indicating whether the data is still loading or has
+ * finished loading.
+ * 		- `products`: An array of objects representing the products available in the
+ * catalog, as described above.
  */
 const Products = () => {
   const { getStock } = useStockRequest();
 const {loading} = useSelector((state) => state.stock)
+const {products} = useSelector((state) => state.stock)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
 
@@ -44,7 +45,8 @@ const {loading} = useSelector((state) => state.stock)
   const [info, setInfo] = useState(initialState);
 
   /**
-   * @description Sets `open` to `false` and `info` to its initial state.
+   * @description Sets the `open` state to `false` and the `info` state to an initial
+   * value.
    */
   const handleClose = () => {
     setOpen(false);
@@ -68,6 +70,7 @@ const {loading} = useSelector((state) => state.stock)
       </Button>
 
 {loading && <TableSkeleton/>}
+{!products.length && <NoDataMessage/> }
 
       <ProductModal
         handleClose={handleClose}
