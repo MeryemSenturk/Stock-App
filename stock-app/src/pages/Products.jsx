@@ -7,36 +7,32 @@ import Grid from "@mui/material/Grid";
 import FirmModal from "../components/FirmModal";
 import ProductTable from "../components/ProductTable";
 import ProductModal from "../components/ProductModal.jsx";
+import TableSkeleton from "../components/DataFetchMessages.jsx";
 
 /**
- * @description Displays a list of products and provides an "New Product" button to
- * create a new product. It also renders a modal for adding or editing products, which
- * fetches stock data from APIs on button click.
+ * @description Manages the display of products, including handling modal opens and
+ * closes, loading states, and product information. It retrieves stock data from API
+ * endpoints and renders a table or skeleton when data is loading.
  * 
- * @returns { jsx.element } a React component that displays a list of products and
- * allows users to create new ones.
+ * @returns { JSXElement } a React component that displays a table of products when
+ * open and a form to add new products when closed.
  * 
- * 		- `getStock`: The `getStock` function is a hook that retrieves stock information
- * from an API. It takes no arguments and returns a promise of an object containing
- * the stock data.
- * 		- `firms`: The `firms` property is an array of firms, which is retrieved from
- * the state of the application using the `useSelector` hook.
- * 		- `open`: The `open` property is a boolean value that indicates whether the modal
- * is currently open or closed. It is initialized to false and updated using the
- * `handleOpen` function.
- * 		- `setOpen`: The `setOpen` function is used to update the value of the `open` property.
- * 		- `info`: The `info` property is an object that contains the initial state of
- * the product form. It has three properties: `categoryId`, `brandId`, and `name`.
- * These properties are initialized to empty strings and updated using the `handleClose`
- * function.
- * 		- `ProductModal`: The `ProductModal` component is a custom React component that
- * renders the product creation form when the modal is open. It takes several props,
- * including `handleClose`, `open`, and `info`, which are used to update the state
- * of the form.
+ * 		- `loading`: This is an boolean property that indicates whether the data is
+ * loading or not. It is initialized to `true` when the component mounts and is set
+ * to `false` once the data has been loaded.
+ * 		- `info`: This is an object property that contains the initial state of the
+ * product catalog. It has three properties: `categoryId`, `brandId`, and `name`.
+ * 		- `ProductModal`: This is a functional component that is rendered when the user
+ * clicks on the "New Product" button. It takes in several props, including `handleClose`
+ * (a function to close the modal), `open` (a boolean indicating whether the modal
+ * is open or not), and `info` (an object containing the initial state of the product
+ * catalog).
+ * 		- `ProductTable`: This is a React table component that displays the list of
+ * products. It is rendered conditionally based on whether the data is loading or not.
  */
 const Products = () => {
   const { getStock } = useStockRequest();
-  const { firms } = useSelector((state) => state.stock);
+const {loading} = useSelector((state) => state.stock)
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
 
@@ -48,8 +44,7 @@ const Products = () => {
   const [info, setInfo] = useState(initialState);
 
   /**
-   * @description Sets `open` to `false` and initializes `info` to its default state,
-   * preparing the component for an unexpected termination.
+   * @description Sets `open` to `false` and `info` to its initial state.
    */
   const handleClose = () => {
     setOpen(false);
@@ -71,6 +66,8 @@ const Products = () => {
       <Button variant="contained" onClick={handleOpen} sx={{ mb: 3 }}>
         New Product
       </Button>
+
+{loading && <TableSkeleton/>}
 
       <ProductModal
         handleClose={handleClose}
