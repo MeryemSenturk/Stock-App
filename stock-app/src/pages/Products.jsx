@@ -8,27 +8,22 @@ import FirmModal from "../components/FirmModal";
 import ProductTable from "../components/ProductTable";
 import ProductModal from "../components/ProductModal.jsx";
 
-const Firms = () => {
+const Products = () => {
   const { getStock } = useStockRequest();
   const { firms } = useSelector((state) => state.stock);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
 
-  const [info, setInfo] = useState({
+  const initialState = {
+    categoryId: "",
+    brandId: "",
     name: "",
-    phone: "",
-    image: "",
-    address: "",
-  });
+  };
+  const [info, setInfo] = useState(initialState);
 
   const handleClose = () => {
     setOpen(false);
-    setInfo({
-      name: "",
-      phone: "",
-      image: "",
-      address: "",
-    });
+    setInfo(initialState);
   };
 
   useEffect(() => {
@@ -57,4 +52,4 @@ const Firms = () => {
   );
 };
 
-export default Firms;
+export default Products;
