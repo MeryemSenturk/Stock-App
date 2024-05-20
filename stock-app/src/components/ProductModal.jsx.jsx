@@ -5,41 +5,70 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import useStockRequest from "../services/useStockRequest";
+import { modalStyle } from "../styles/globalStyles";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
+/**
+ * @description Creates a modal component that allows users to input information about
+ * a product, including age and address. When the "ADD PRODUCT" button is clicked,
+ * the information is sent to a postStock() request.
+ * 
+ * @param { function. } handleClose - function to call when the modal is closed.
+ * 
+ * 		- `open`: Whether the modal is currently open (a boolean value)
+ * 		- `open`: The current state of the modal (open or closed)
+ * 		- `info`: An object containing information about the product to be added, with
+ * properties such as address (a string value)
+ * 
+ * @param { boolean } open - Modal component's current open state, which is passed
+ * as a prop to the Modal component to control its visibility.
+ * 
+ * @param { object } info - input product details, such as address, that can be edited
+ * and sent to postStock
+ * 
+ * @param { object } setInfo - 4th argument provided to the `ProductModal` function
+ * and updates the `info` object using the provided information from the user inputs,
+ * which is then returned as an updated state.
+ * 
+ * @returns { any } a form for adding a new product, with fields for address and age
+ * selection.
+ */
 export default function ProductModal({ handleClose, open, info, setInfo }) {
 
 
-  const { postStock, putStock } = useStockRequest();
+  const { postStock} = useStockRequest();
 
 
   
 
+  /**
+   * @description Sets the specified property of the `info` object to the corresponding
+   * value of the target element when the user changes it.
+   * 
+   * @param { object } e - Event object that contains information about the form value
+   * change, and its `target` property provides the name of the form field whose value
+   * is being updated.
+   */
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
+  /**
+   * @description Prevented the default form submission behavior, passed the form data
+   * to the `postStock` function, and then closed the modal window.
+   * 
+   * @param { object } e - event object and prevents the default behavior of the button's
+   * action.
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (info._id) {
-      //? put isteginin
-      putStock("firms", info);
-    } else{
       //? post firma işlemi
-      postStock("firms", info);
-    }
-
+      postStock("products", info);
+    
     //? modal ı kapıtıyoruz
     handleClose();
   };
@@ -53,33 +82,26 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <Box
             sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             component={"form"}
             onSubmit={handleSubmit}
           >
-            <TextField
-              label="Firm Name"
-              name="name"
-              id="name"
-              type="text"
-              variant="outlined"
-              value={info.name}
-              onChange={handleChange}
-              required
-            />
-
-            <TextField
-              label="Phone"
-              name="phone"
-              id="phone"
-              type="tel"
-              variant="outlined"
-              value={info.phone}
-              onChange={handleChange}
-              required
-            />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                // value={age}
+                label="Age"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
 
             <TextField
               label="address"
@@ -93,7 +115,7 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
             />
 
             <Button variant="contained" type="submit">
-              {info._id ? "UPDATE FIRM" : "ADD FIRM"}
+              ADD PRODUCT
             </Button>
           </Box>
         </Box>
