@@ -9,13 +9,13 @@ import {
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 /**
- * @description Provides four utility functions for working with stock data: `getStock`,
- * `deleteStock`, `putStock`, and `postStock`. These functions make asynchronous
- * requests to the API using `axiosToken` and dispatch actions to update the UI upon
- * success or failure.
+ * @description Provides an API to fetch or modify stock-related data through Axios
+ * token-based authentication. It returns four functions: `getFirms`, `deleteStock`,
+ * `putStock`, and `postStock`, each with its own method for interacting with the
+ * stock data.
  * 
- * @returns { object } an object with four functions: `getFirms`, `deleteStock`,
- * `putStock`, and `postStock`.
+ * @returns { object } an object that provides four functions for retrieving, deleting,
+ * updating, and posting stock information.
  */
 const useStockRequest = () => {
 const {axiosToken} = useAxios()
@@ -36,11 +36,11 @@ const dispatch = useDispatch()
 
   //? 7 tane fonksiyon yazmak yerine parametrik hale getirdik
     /**
-     * @description Performs a request to the API endpoint for stock data given the path
-     * parameter, logs the response to the console and dispatches an action with the
-     * retrieved data and path to the Redux store.
+     * @description Retrieves stock data from an API using a token, logs the received
+     * data, and dispatches an action to display the data success message or failure notification.
      * 
-     * @param { string } path - URL path of the endpoint to retrieve stock data from.
+     * @param { string } path - path to the API endpoint that will be fetched for the
+     * stock data.
      */
     const getStock = async (path = "firms") => {
       dispatch(fetchStockStart());
@@ -51,18 +51,21 @@ const dispatch = useDispatch()
         dispatch(getStockSuccess({ stockData, path }));
       } catch (error) {
         dispatch(fetchStockFail());
+         toastErrorNotify(`${path} verileri çekilememiştir.`);
         console.log(error);
       }
     };
 
 
        /**
-        * @description Deletes a specified stock from a firms array via axios Token API.
+        * @description Deletes a stock with the given `id` using `axiosToken`. If successful,
+        * it displays a toast message and calls `getStock` with the updated `path`. If an
+        * error occurs, it displays a different toast message and logs the error.
         * 
-        * @param { string } path - name of the resource or data type to be deleted, which
-        * is used as the URL for the API call to delete the specified resource or data type.
+        * @param { string } path - URL path of the resource to be deleted.
         * 
-        * @param { integer } id - id of the stock to be deleted.
+        * @param { string } id - unique identifier for the record being deleted in the
+        * specified path.
         */
        const deleteStock = async (path="firms", id) => {
          dispatch(fetchStockStart());
@@ -79,16 +82,15 @@ const dispatch = useDispatch()
        };
 
        /**
-        * @description Performs a POST request to `/firms/` using the axios Token, passing
-        * the information `info`, and upon successful response, calls `getStock` and displays
-        * a success notification, otherwise it calls `fetchStockFail` and displays an error
-        * notification.
+        * @description Dispatches an action to fetch stock data, sends a POST request to the
+        * API with the required information, and displays a successful or failed notification
+        * to the user depending on the response from the API.
         * 
-        * @param { string } path - API endpoint for the requested data.
+        * @param { string } path - route to which the `info` object is being sent in an
+        * asynchronous manner using `axiosToken.post()` method.
         * 
-        * @param { object } info - additional data required to make an API call to `/${path}/`,
-        * where `/path` is a string representing the desired endpoint, and is passed to the
-        * `axiosToken.post()` method for posting to that endpoint.
+        * @param { object } info - additional data that needs to be sent to the `/${path}/`
+        * endpoint via an HTTP POST request.
         */
        const postStock = async (path = "firms", info) => {
          dispatch(fetchStockStart());
@@ -104,14 +106,14 @@ const dispatch = useDispatch()
        };
 
        /**
-        * @description Updates the stock information for a given ID in the `/firms` endpoint
-        * using `axios` token authentication, and then retrieves the updated stock information
-        * using the `getStock` function.
+        * @description Updates stock information for a specific ID in the `firms` path using
+        * axios and dispatches actions to fetch the updated stock information and handle any
+        * errors.
         * 
-        * @param { string } path - path to the stock data that needs to be updated.
+        * @param { string } path - resource being manipulated, in this case it's the "firms"
+        * resource.
         * 
-        * @param { object } info - data to be updated or inserted in the specified path on
-        * the server.
+        * @param { object } info - ID of the stock to update.
         */
        const putStock = async (path = "firms", info) => {
          dispatch(fetchStockStart());
