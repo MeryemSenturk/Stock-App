@@ -5,6 +5,7 @@ import {
   getFirmsSuccess,
   fetchStockFail,
   getStockSuccess,
+  getProPurBraFirmSuccess,
 } from "../features/stockSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
@@ -79,8 +80,25 @@ const dispatch = useDispatch()
          }
        };
 
+
+       const getProPurBraFirmStock = async () => {
+         dispatch(fetchStockStart());
+         try {
+           const [products, purchases, brands, firms] = await Promise.all([
+             await axiosToken("/products"),
+             await axiosToken("/purchases"),
+             await axiosToken("/brands"),
+             await axiosToken("/firms"),
+           ]);
+           console.log(products.data.data, firms);
+           dispatch(getProPurBraFirmSuccess());
+         } catch (error) {
+           console.log(error);
+         }
+       };
+
   // return { getFirms};
-  return { getStock, deleteStock, putStock, postStock };
+  return { getStock, deleteStock, putStock, postStock, getProPurBraFirmStock };
 }
 
 export default useStockRequest

@@ -36,6 +36,13 @@ getStockSuccess: (state, {payload: {path, stockData}}) => {
     state.error = false;
 },
 
+getProPurBraFirmSuccess: (state, {payload}) => {
+    state.loading = false;
+    state.products = x;
+    state.purchases = x;
+    state.brands = x;
+    state.firms = x;
+},
 
 fetchStockFail: (state)=> {
 state.loading = false;
@@ -47,7 +54,7 @@ state.error = true;
 });
 
 // export const { fetchStockStart, getFirmsSuccess, fetchStockFail } = stockSlice.actions;
-export const { fetchStockStart, getStockSuccess, fetchStockFail } = stockSlice.actions;
+export const { fetchStockStart, getStockSuccess, fetchStockFail, getProPurBraFirmSuccess } = stockSlice.actions;
 
 
 export default stockSlice.reducer;
