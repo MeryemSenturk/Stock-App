@@ -38,10 +38,10 @@ getStockSuccess: (state, {payload: {path, stockData}}) => {
 
 getProPurBraFirmSuccess: (state, {payload}) => {
     state.loading = false;
-    state.products = x;
-    state.purchases = x;
-    state.brands = x;
-    state.firms = x;
+    state.products = payload?.products;
+    state.purchases = payload?.purchases;
+    state.brands = payload?.brands;
+    state.firms = payload?.firms;
 },
 
 fetchStockFail: (state)=> {
