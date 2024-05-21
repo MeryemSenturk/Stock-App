@@ -1,19 +1,25 @@
 import React from 'react'
 import KPICards from "../components/KPICards"
 import Charts from "../components/Charts"
+import { useEffect } from 'react'
+import useStockRequest from "../services/useStockRequest";
 
 /**
- * @description Generates high-quality documentation for code provided to it, comprising
- * two components: KPI Cards and Charts.
+ * @description Fetches stock data from APIs using the `useStockRequest` hook and
+ * stores it in the component state.
  * 
- * @returns { HTML division element } a HTML container holding both KPI cards and charts.
- * 
- * 		- `<KPICards>`: A container for multiple KPI cards that display key performance
- * indicators related to the organization.
- * 		- `<Charts>`: A container for various charts and graphs that provide visual
- * representations of data related to the organization's performance.
+ * @returns { array } a combination of KPI cards and charts related to stock sales
+ * and purchases.
  */
 const Home = () => {
+  const {getStock} = useStockRequest()
+  
+  
+  useEffect(() => {
+    getStock("sales")
+    getStock("purchases")
+  }, [])
+  
   return (
     <div>
       <KPICards/>
