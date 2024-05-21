@@ -5,17 +5,19 @@ import {
   getFirmsSuccess,
   fetchStockFail,
   getStockSuccess,
+  getProPurBraFirmSuccess,
 } from "../features/stockSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
 /**
- * @description Provides an API to fetch or modify stock-related data through Axios
- * token-based authentication. It returns four functions: `getFirms`, `deleteStock`,
- * `putStock`, and `postStock`, each with its own method for interacting with the
- * stock data.
+ * @description Generates high-quality documentation for code given to it, and it
+ * does that by providing an object with various methods for retrieving or manipulating
+ * stock data: `getStock`, `deleteStock`, `putStock`, `postStock`, and `getProPurBraFirmStock`.
+ * These methods return Promise objects, which allow the function to handle asynchronous
+ * operations in a synchronous way.
  * 
- * @returns { object } an object that provides four functions for retrieving, deleting,
- * updating, and posting stock information.
+ * @returns { array } an object containing five functions for fetching and managing
+ * stock data.
  */
 const useStockRequest = () => {
 const {axiosToken} = useAxios()
@@ -36,11 +38,11 @@ const dispatch = useDispatch()
 
   //? 7 tane fonksiyon yazmak yerine parametrik hale getirdik
     /**
-     * @description Retrieves stock data from an API using a token, logs the received
-     * data, and dispatches an action to display the data success message or failure notification.
+     * @description 1) dispatches an action to fetch stock data, 2) sends a request to
+     * the API with the path parameter, 3) catches any errors that occur during the
+     * request, and 4) logs the error or displays a toast message if there was an issue.
      * 
-     * @param { string } path - path to the API endpoint that will be fetched for the
-     * stock data.
+     * @param { string } path - URL path to fetch stock data from the API.
      */
     const getStock = async (path = "firms") => {
       dispatch(fetchStockStart());
@@ -59,13 +61,12 @@ const dispatch = useDispatch()
 
        /**
         * @description Deletes a stock with the given `id` using `axiosToken`. If successful,
-        * it displays a toast message and calls `getStock` with the updated `path`. If an
-        * error occurs, it displays a different toast message and logs the error.
+        * it displays a success toast and calls `getStock`. If unsuccessful, it displays an
+        * error toast and logs the error.
         * 
-        * @param { string } path - URL path of the resource to be deleted.
+        * @param { string } path - path of the resource to be deleted.
         * 
-        * @param { string } id - unique identifier for the record being deleted in the
-        * specified path.
+        * @param { integer } id - unique identifier for the firms record to be deleted.
         */
        const deleteStock = async (path="firms", id) => {
          dispatch(fetchStockStart());
@@ -82,15 +83,16 @@ const dispatch = useDispatch()
        };
 
        /**
-        * @description Dispatches an action to fetch stock data, sends a POST request to the
-        * API with the required information, and displays a successful or failed notification
-        * to the user depending on the response from the API.
+        * @description Performs a POST request to the `/firms` endpoint, passing the required
+        * information, and upon successful response, retrieves the updated data by calling
+        * `getStock` function. If there's an error, it displays an error message and logs
+        * the error.
         * 
-        * @param { string } path - route to which the `info` object is being sent in an
-        * asynchronous manner using `axiosToken.post()` method.
+        * @param { string } path - endpoint to which the `info` object is posted, typically
+        * determining the type of stock data to be retrieved.
         * 
-        * @param { object } info - additional data that needs to be sent to the `/${path}/`
-        * endpoint via an HTTP POST request.
+        * @param { object } info - data that needs to be sent to the API endpoint for the
+        * specified path.
         */
        const postStock = async (path = "firms", info) => {
          dispatch(fetchStockStart());
@@ -106,14 +108,14 @@ const dispatch = useDispatch()
        };
 
        /**
-        * @description Updates stock information for a specific ID in the `firms` path using
-        * axios and dispatches actions to fetch the updated stock information and handle any
-        * errors.
+        * @description Updates the given stock's information using `axiosToken`. If successful,
+        * it calls `getStock()` to retrieve the updated stock list; otherwise, it logs the
+        * error and dispatches a `fetchStockFail()` action.
         * 
-        * @param { string } path - resource being manipulated, in this case it's the "firms"
-        * resource.
+        * @param { string } path - name of the firms API endpoint.
         * 
-        * @param { object } info - ID of the stock to update.
+        * @param { object } info - update information for the stock, which includes the
+        * `_id`, `name`, `symbol`, `price`, and `quantity` properties.
         */
        const putStock = async (path = "firms", info) => {
          dispatch(fetchStockStart());
@@ -126,8 +128,30 @@ const dispatch = useDispatch()
          }
        };
 
+
+       /**
+        * @description Dispatches an action to fetch stock data from API endpoints for
+        * products, purchases, brands, and firms. It then logs the received data and dispatches
+        * another action to signal that the operation has completed successfully.
+        */
+       const getProPurBraFirmStock = async () => {
+         dispatch(fetchStockStart());
+         try {
+           const [products, purchases, brands, firms] = await Promise.all([
+             await axiosToken("/products"),
+             await axiosToken("/purchases"),
+             await axiosToken("/brands"),
+             await axiosToken("/firms"),
+           ]);
+           console.log(products.data.data, firms);
+           dispatch(getProPurBraFirmSuccess());
+         } catch (error) {
+           console.log(error);
+         }
+       };
+
   // return { getFirms};
-  return { getStock, deleteStock, putStock, postStock };
+  return { getStock, deleteStock, putStock, postStock, getProPurBraFirmStock };
 }
 
 export default useStockRequest
